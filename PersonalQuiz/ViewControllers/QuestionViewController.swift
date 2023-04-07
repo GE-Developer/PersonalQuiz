@@ -32,13 +32,18 @@ final class QuestionViewController: UIViewController {
         questions[questionIndex].answers
     }
     
-    // MARK: - View Life Cycle
+    // MARK: - Override Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         updateUI()
         let answerCount = Float(currentAnswers.count - 1)
         rangedSlider.maximumValue = answerCount
         rangedSlider.value = answerCount / 2
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let resultVC = segue.destination as? ResultViewController else { return }
+        resultVC.answersChosen = answersChosen
     }
 
     // MARK: - IB Actions
@@ -55,7 +60,6 @@ final class QuestionViewController: UIViewController {
                 answersChosen.append(answer)
             }
         }
-        
         nextQuestion()
     }
     
